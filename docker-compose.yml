@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  web.bff:
+    image: ${DOCKER_REGISTRY-}webbff
+    build:
+      context: .
+      dockerfile: Web.BFF/Dockerfile
+
+  greetingservice:
+    image: ${DOCKER_REGISTRY-}greetingservice
+    build:
+      context: .
+      dockerfile: GreetingService/Dockerfile
+

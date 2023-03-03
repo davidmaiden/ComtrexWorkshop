@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web.BFF.Interfaces;
 
 namespace Web.BFF.Controllers;
 
@@ -6,12 +7,18 @@ namespace Web.BFF.Controllers;
 [ApiController]
 public class GreetingController : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetGreeting(int id)
+    private readonly IGreetingService _greetingService;
+
+    public GreetingController(IGreetingService greetingService)
     {
+        _greetingService = greetingService;
+    }
 
-
-        return await Task.FromResult(Ok(""));
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetGreeting(string id)
+    {
+        var result = _greetingService.GetGreetingByIdAsync(id);
+        return await Task.FromResult(Ok(result));
     }
 
     [HttpPost()]

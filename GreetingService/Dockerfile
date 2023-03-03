@@ -3,20 +3,19 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
-#EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Web.BFF/Web.BFF.csproj", "Web.BFF/"]
-RUN dotnet restore "Web.BFF/Web.BFF.csproj"
+COPY ["GreetingService/GreetingService.csproj", "GreetingService/"]
+RUN dotnet restore "GreetingService/GreetingService.csproj"
 COPY . .
-WORKDIR "/src/Web.BFF"
-RUN dotnet build "Web.BFF.csproj" -c Release -o /app/build
+WORKDIR "/src/GreetingService"
+RUN dotnet build "GreetingService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Web.BFF.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "GreetingService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Web.BFF.dll"]
+ENTRYPOINT ["dotnet", "GreetingService.dll"]

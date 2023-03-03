@@ -22,10 +22,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //});
 
 // Add other services here.....
+builder.Services.AddHttpClient("GreetingService", cfg => 
+{
+    cfg.BaseAddress = new Uri("localhost:32770");
+});
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IGreetingService, GreetingService>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
+
 
 //builder.Services.AddAuthorization(options =>
 //{

@@ -1,0 +1,8 @@
+docker build -t web-bff -f web.bff\Dockerfile .
+
+docker build -t greeting-service -f GreetingService\Dockerfile .
+
+docker run -d -p 5083:80 --name greeting-service --rm greeting-service
+
+docker run -d -p 5045:80 --name web-bff --rm web-bff
+

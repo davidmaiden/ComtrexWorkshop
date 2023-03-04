@@ -6,8 +6,12 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.BFF", "Web.BFF\Web.BFF.csproj", "{BF2C3D6E-2214-442C-9F3C-954F462E0001}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E5896948-6EEC-4992-A067-27009823B01A}"
+	ProjectSection(SolutionItems) = preProject
+		docker-commands.txt = docker-commands.txt
+		dockertest.http = dockertest.http
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreetingService", "GreetingService\GreetingService.csproj", "{5EDF85AF-1056-498D-81E2-F4DA12C2818A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreetingService", "GreetingService\GreetingService.csproj", "{5EDF85AF-1056-498D-81E2-F4DA12C2818A}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E2265F3A-0E04-49B5-AD70-8AD2D4019556}"
 EndProject

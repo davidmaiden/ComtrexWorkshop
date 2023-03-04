@@ -17,7 +17,7 @@ public class GreetingController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetGreeting(string id)
     {
-        var result = _greetingService.GetGreetingByIdAsync(id);
+        var result = await _greetingService.GetGreetingByIdAsync(id);
         return await Task.FromResult(Ok(result));
     }
 

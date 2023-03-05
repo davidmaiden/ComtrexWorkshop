@@ -13,8 +13,11 @@ public class GreetingService : IGreetingService
 
     public async Task<string> GetGreetingByIdAsync(string id)
     {
-        var result = await _httpClient.GetAsync($"/greeting/{id}");
-        return await result.Content.ReadAsStringAsync();
+        var response = await _httpClient.GetAsync($"/greeting/{id}");
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task SaveGreetingAsync(int id, string greeting)

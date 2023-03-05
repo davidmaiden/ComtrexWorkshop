@@ -24,7 +24,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Add other services here.....
 builder.Services.AddHttpClient("GreetingService", cfg => 
 {
-    cfg.BaseAddress = new Uri("http://192.168.0.25:32772");
+    cfg.BaseAddress = new Uri(builder.Configuration.GetSection("Services").GetValue<string>("Greeting"));
 });
 
 builder.Services.AddHttpContextAccessor();

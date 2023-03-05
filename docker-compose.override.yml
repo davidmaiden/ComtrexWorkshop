@@ -1,19 +1,19 @@
 version: '3.4'
 
 services:
-  web.bff:
+  web-bff:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "32770:80"
-      - "32771:443"
+      - "5045:80"
+      - "7045:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-  greetingservice:
+  greeting-service:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "32772:80"
+      - "5083:80"
 

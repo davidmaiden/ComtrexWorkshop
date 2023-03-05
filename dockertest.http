@@ -1,3 +1,7 @@
+### Test Greeting Service directly
+
 GET http://localhost:5083/greeting/5
 
-###
+###  Test Web BFF (to Greeting Service
+
+GET http://localhost:5045/greeting/8

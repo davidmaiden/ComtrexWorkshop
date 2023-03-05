@@ -6,3 +6,14 @@ docker run -d -p 5083:80 --name greeting-service --rm greeting-service
 
 docker run -d -p 5045:80 --name web-bff --rm web-bff
 
+# from a powershell prompt
+
+cd greetingservice
+
+./start-self-hosted.ps1
+
+# from another powershell prompt
+
+cd web.bff
+
+./start-self-hosted.ps1

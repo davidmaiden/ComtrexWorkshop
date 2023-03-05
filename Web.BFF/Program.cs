@@ -1,3 +1,4 @@
+using Dapr.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -15,20 +16,32 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 
+
+
 //builder.Services.AddApiVersioning(opts =>
 //{
 //    opts.ReportApiVersions = true;
 //    opts.UseApiBehavior = true;
-//});
+//});builder.Services.AddSingleton<IRegisteredApplicationService>(sc => 
+
+builder.Services.AddDaprClient();
+
+//builder.Services.AddSingleton<IGreetingService>(sc =>
+//        new RegisteredApplicationService(DaprClient.CreateInvokeHttpClient("regappsvc")));
+
+
 
 // Add other services here.....
-builder.Services.AddHttpClient("GreetingService", cfg => 
-{
-    cfg.BaseAddress = new Uri(builder.Configuration.GetSection("Services").GetValue<string>("Greeting"));
-});
+//builder.Services.AddHttpClient("GreetingService", cfg =>
+//{
+//    cfg = DaprClient.CreateInvokeHttpClient("greeting-service");
+//});
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<IGreetingService, GreetingService>();
+
+builder.Services.AddSingleton<IGreetingService>(sc =>
+        new GreetingService(DaprClient.CreateInvokeHttpClient("greeting-service")));
+
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClaimsTransformation, ClaimsTransformation>();

@@ -6,9 +6,9 @@ public class GreetingService : IGreetingService
 {
     private HttpClient _httpClient;
 
-    public GreetingService(IHttpClientFactory httpClientFactory)
+    public GreetingService(HttpClient httpClient)
     {
-        _httpClient = httpClientFactory.CreateClient("GreetingService");
+        _httpClient = httpClient;
     }
 
     public async Task<string> GetGreetingByIdAsync(string id)

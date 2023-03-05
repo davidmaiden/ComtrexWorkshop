@@ -3,5 +3,5 @@ public interface IGreetingService
 {
     Task<string> GetGreetingByIdAsync(string id);
 
-    Task SaveGreeting(string greeting);
+    Task SaveGreetingAsync(int id, string greeting);
 }

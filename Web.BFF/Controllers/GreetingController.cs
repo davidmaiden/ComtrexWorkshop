@@ -17,15 +17,31 @@ public class GreetingController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetGreeting(string id)
     {
-        var result = await _greetingService.GetGreetingByIdAsync(id);
-        return await Task.FromResult(Ok(result));
+        try
+        {
+            var result = await _greetingService.GetGreetingByIdAsync(id);
+            return await Task.FromResult(Ok(result));
+        }
+        catch (Exception ex) 
+        {
+            return await Task.FromResult(NotFound());
+        }
     }
 
-    [HttpPost()]
-    public async Task<IActionResult> AddGreeting([FromBody] string greeting)
+    [HttpPost("{id}")]
+    public async Task<IActionResult> AddGreeting(int id, [FromBody] string greeting)
     {
+        if (string.IsNullOrEmpty(greeting))
+            return await Task.FromResult(BadRequest());
 
-
-        return await Task.FromResult(Ok());
+        try
+        {
+            await _greetingService.SaveGreetingAsync(id, greeting);
+            return await Task.FromResult(Ok());
+        }
+        catch (Exception ex)
+        {
+            return await Task.FromResult(BadRequest());
+        }
     }
 }

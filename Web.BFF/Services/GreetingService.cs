@@ -17,8 +17,12 @@ public class GreetingService : IGreetingService
         return await result.Content.ReadAsStringAsync();
     }
 
-    public Task SaveGreeting(string greeting)
+    public async Task SaveGreetingAsync(int id, string greeting)
     {
-        throw new NotImplementedException();
+        var body = new StringContent(greeting);
+
+        var response = await _httpClient.PostAsync($"/greeting/{id}", body);
+
+        response.EnsureSuccessStatusCode();
     }
 }

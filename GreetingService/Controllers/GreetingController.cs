@@ -1,21 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dapr.Client;
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc;
 
-namespace GreetingService.Controllers
+namespace GreetingService.Controllers;
+
+[Route("[controller]")]
+[ApiController]
+public class GreetingController : ControllerBase
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class GreetingController : ControllerBase
+    private readonly DaprClient _daprClient;
+
+    public GreetingController(DaprClient daprClient)
     {
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return $"Greetings from {id}";
-        }
+        _daprClient = daprClient;
+    }
 
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var result = await _daprClient.GetStateAsync<string>("greetingstate", id.ToString());
 
-        }
+        if (string.IsNullOrEmpty(result))
+            return await Task.FromResult(NotFound());
+
+        return await Task.FromResult(Ok(result));
+    }
+
+    [HttpPost("{id}")]
+    public async Task<IActionResult> Post(int id, [FromBody] string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return await Task.FromResult(BadRequest());
+
+        await _daprClient.SaveStateAsync("greetingstate", id.ToString(), value);
+        return await Task.FromResult(Ok());
     }
 }

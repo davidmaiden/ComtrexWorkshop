@@ -1,5 +1,5 @@
-﻿using System.Net.Http;
-using Web.BFF.Interfaces;
+﻿using Web.BFF.Interfaces;
+using Web.BFF.Models;
 
 namespace Web.BFF.Services;
 
@@ -10,6 +10,7 @@ public class GreetingService : IGreetingService
     public GreetingService(HttpClient httpClient)
     {
         _httpClient = httpClient;
+        _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
     }
 
     public async Task<string> GetGreetingByIdAsync(string id)
@@ -23,10 +24,12 @@ public class GreetingService : IGreetingService
 
     public async Task SaveGreetingAsync(int id, string greeting)
     {
-        var body = new StringContent(greeting);
-        body.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        var serializedGreeting = System.Text.Json.JsonSerializer.Serialize(new GreetingValue(greeting));
 
-        var response = await _httpClient.PostAsync($"/v1/greeting/{id}", body);
+        var msg = new HttpRequestMessage(HttpMethod.Post, $"/v1/greeting/{id}");
+        msg.Content = new StringContent(serializedGreeting, System.Text.Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.SendAsync(msg);
 
         response.EnsureSuccessStatusCode();
     }

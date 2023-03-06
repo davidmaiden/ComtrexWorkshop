@@ -2,6 +2,7 @@ using Dapr.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
 using System.Security.Claims;
@@ -40,9 +41,7 @@ builder.Services.AddDaprClient();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddSingleton<IGreetingService>(sc =>
-        new GreetingService(DaprClient.CreateInvokeHttpClient("greeting-service")));
-
+builder.Services.AddScoped<IGreetingService>(sc => new GreetingService(DaprClient.CreateInvokeHttpClient("greeting-service")));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
 

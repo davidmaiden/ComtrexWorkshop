@@ -1,10 +1,10 @@
 ﻿using Dapr.Client;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreetingService.Controllers;
 
-[Route("[controller]")]
+[ApiVersion("1.0")]
+[Route("v{version:apiVersion}/[controller]")]
 [ApiController]
 public class GreetingController : ControllerBase
 {

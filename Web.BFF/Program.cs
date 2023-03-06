@@ -18,13 +18,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 
-//builder.Services.AddApiVersioning(opts =>
-//{
-//    opts.ReportApiVersions = true;
-//    opts.UseApiBehavior = true;
-//});builder.Services.AddSingleton<IRegisteredApplicationService>(sc => 
+builder.Services.AddApiVersioning(opts =>
+{
+    opts.ReportApiVersions = true;
+    opts.UseApiBehavior = true;
+});
 
 builder.Services.AddDaprClient();
+
 
 //builder.Services.AddSingleton<IGreetingService>(sc =>
 //        new RegisteredApplicationService(DaprClient.CreateInvokeHttpClient("regappsvc")));
@@ -41,7 +42,6 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IGreetingService>(sc =>
         new GreetingService(DaprClient.CreateInvokeHttpClient("greeting-service")));
-
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClaimsTransformation, ClaimsTransformation>();

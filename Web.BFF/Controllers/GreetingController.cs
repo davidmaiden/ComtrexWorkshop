@@ -3,7 +3,8 @@ using Web.BFF.Interfaces;
 
 namespace Web.BFF.Controllers;
 
-[Route("[Controller]")]
+[ApiVersion("1.0")]
+[Route("v{version:apiVersion}/[Controller]")]
 [ApiController]
 public class GreetingController : ControllerBase
 {

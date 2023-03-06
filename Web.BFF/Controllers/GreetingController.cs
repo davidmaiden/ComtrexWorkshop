@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Web.BFF.Interfaces;
 
 namespace Web.BFF.Controllers;
@@ -6,6 +7,7 @@ namespace Web.BFF.Controllers;
 [ApiVersion("1.0")]
 [Route("v{version:apiVersion}/[Controller]")]
 [ApiController]
+[Authorize]
 public class GreetingController : ControllerBase
 {
     private readonly IGreetingService _greetingService;

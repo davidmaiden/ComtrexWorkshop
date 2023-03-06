@@ -12,3 +12,9 @@ Added Dapr to the projects that can run in either stand alone mode to develop wi
 
 ## 03 Branch
 Added Dapr Client to the Greeting Service to save to and read from state store
+
+## 04 Branch
+Adding (semantic) versioning to the endpoints
+
+## 05 Branch
+Adding in Authorization and Authentication

@@ -2,6 +2,20 @@
 
 GET http://localhost:5083/greeting/5
 
-###  Test Web BFF (to Greeting Service
+###  Test Web BFF (to Greeting Service)
 
 GET http://localhost:5045/greeting/8
+
+### Post a new greeting
+POST http://localhost:5045/greeting/8
+content-type: application/json
+
+"Greeting from me"
+
+### Post another greeting
+POST http://localhost:5045/greeting/5
+content-type: application/json
+
+"Greeting from you"
+
+###

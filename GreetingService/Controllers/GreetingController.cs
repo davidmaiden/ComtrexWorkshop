@@ -1,5 +1,6 @@
 ﻿using Dapr.Client;
 using Google.Protobuf.WellKnownTypes;
+using GreetingService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreetingService.Controllers;
@@ -27,12 +28,15 @@ public class GreetingController : ControllerBase
     }
 
     [HttpPost("{id}")]
-    public async Task<IActionResult> Post(int id, [FromBody] string value)
+    public async Task<IActionResult> Post(int id, [FromBody] GreetingValue greetingValue)
     {
-        if (string.IsNullOrEmpty(value))
+        if (greetingValue is null)
             return await Task.FromResult(BadRequest());
 
-        await _daprClient.SaveStateAsync("greetingstate", id.ToString(), value);
+        if (string.IsNullOrEmpty(greetingValue.Greeting))
+            return await Task.FromResult(BadRequest());
+
+        await _daprClient.SaveStateAsync("greetingstate", id.ToString(), greetingValue.Greeting);
         return await Task.FromResult(Ok());
     }
 }
